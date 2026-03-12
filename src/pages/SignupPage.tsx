@@ -68,7 +68,7 @@ const SignupPage = () => {
       >
         <div className="grid md:grid-cols-2 overflow-hidden bg-card border border-border/50 rounded-xl shadow-elevated">
           {/* Left Side: Visual Sidebar */}
-          <div className="hidden md:flex flex-col justify-between p-12 bg-foreground text-background relative overflow-hidden order-last md:order-first">
+          <div className="hidden md:flex flex-col justify-between p-12 gradient-primary text-background relative overflow-hidden order-last md:order-first">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -125,7 +125,7 @@ const SignupPage = () => {
           <div className="flex flex-col justify-center p-8 md:p-12 bg-card">
             <motion.div variants={itemVariants} className="mb-8">
               <div className="md:hidden flex justify-center mb-6">
-                <div className="h-12 w-12 rounded-xl bg-foreground flex items-center justify-center shadow-lg">
+                <div className="h-12 w-12 rounded-xl gradient-primary flex items-center justify-center shadow-lg">
                   <ChefHat className="h-6 w-6 text-background" />
                 </div>
               </div>

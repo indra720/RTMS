@@ -62,7 +62,7 @@ const LoginPage = () => {
       >
         <div className="grid md:grid-cols-2 overflow-hidden bg-card border border-border/50 rounded-xl shadow-elevated">
           {/* Left Side: Visual Sidebar */}
-          <div className="hidden md:flex flex-col justify-between p-12 bg-foreground text-background relative overflow-hidden">
+          <div className="hidden md:flex flex-col justify-between p-12 gradient-primary text-background relative overflow-hidden">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -109,7 +109,7 @@ const LoginPage = () => {
           <div className="flex flex-col justify-center p-8 md:p-14 bg-card">
             <motion.div variants={itemVariants} className="mb-10">
               <div className="md:hidden flex justify-center mb-6">
-                <div className="h-12 w-12 rounded-xl bg-foreground flex items-center justify-center shadow-lg">
+                <div className="h-12 w-12 rounded-xl gradient-primary flex items-center justify-center shadow-lg">
                   <ChefHat className="h-6 w-6 text-background" />
                 </div>
               </div>
