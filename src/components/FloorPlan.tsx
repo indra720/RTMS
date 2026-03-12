@@ -166,7 +166,8 @@ export function FloorPlan() {
 
         <div className="h-8 w-[1px] bg-border/40 mx-2" />
 
-        <Button variant="outline" size="sm" className="h-10 gap-2 rounded-xl border-2 font-black uppercase tracking-tighter text-[10px] hover:bg-primary/5 hover:text-primary transition-all">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-2">
+         <Button variant="outline" size="sm" className="h-10 gap-2 rounded-xl border-2 font-black uppercase tracking-tighter text-[10px] hover:bg-primary/5 hover:text-primary transition-all">
           <Layers className="h-4 w-4" /> Section
         </Button>
         <Button variant="outline" size="sm" className="h-10 gap-2 rounded-xl border-2 font-black uppercase tracking-tighter text-[10px] hover:bg-primary/5 hover:text-primary transition-all">
@@ -174,7 +175,7 @@ export function FloorPlan() {
         </Button>
         <Button variant="ghost" size="sm" className="h-10 gap-2 rounded-xl font-black uppercase tracking-tighter text-[10px] hover:bg-rose-50 hover:text-rose-600 transition-all ml-auto" onClick={resetLayout}>
           <RotateCcw className="h-4 w-4" /> Reset Layout
-        </Button>
+        </Button></div> 
       </div>
 
       {/* Floor Canvas */}

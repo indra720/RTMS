@@ -169,7 +169,7 @@ const AdminMenuPage = () => {
   };
 
   return (
-    <div className="p-6 space-y-6 max-w-[1400px]">
+    <div className="p-2 space-y-2 max-w-[1400px]">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>

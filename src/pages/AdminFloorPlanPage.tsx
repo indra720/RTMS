@@ -7,7 +7,7 @@ import { Move, MousePointer2, Save, Info, Layout } from "lucide-react";
 
 export default function AdminFloorPlanPage() {
   return (
-    <div className="p-6 space-y-6 max-w-[1400px]">
+    <div className="p-2 space-y-2 max-w-[1400px]">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
@@ -59,10 +59,10 @@ export default function AdminFloorPlanPage() {
         </div>
 
         {/* Action Tip */}
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 hidden md:flex">
           <Badge variant="outline" className="bg-background/50 backdrop-blur-md border-border/50 px-4 py-1.5 rounded-full shadow-sm gap-2 flex items-center">
             <Info className="h-3.5 w-3.5 text-primary shrink-0" />
-            <span className="text-[10px] font-bold uppercase tracking-tight">Drag tables to reposition. Changes auto-cached.</span>
+            <span className="text-[10px] font-bold uppercase tracking-tight " >Drag tables to reposition. Changes auto-cached.</span>
           </Badge>
         </div>
       </div>

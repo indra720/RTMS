@@ -25,7 +25,7 @@ const occupancyData = [
 
 const Index = () => {
   return (
-    <div className="p-6 space-y-6 max-w-[1400px]">
+    <div className="p-2 space-y-2 max-w-[1400px]">
       {/* Header */}
       <div>
         <h1 className="font-heading font-bold text-2xl text-foreground">Dashboard</h1>
@@ -33,7 +33,7 @@ const Index = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         {statCards.map((stat, i) => (
           <motion.div
             key={stat.label}
@@ -61,7 +61,7 @@ const Index = () => {
       </div>
 
       {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
         {/* Revenue Chart */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}

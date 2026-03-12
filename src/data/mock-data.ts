@@ -489,6 +489,167 @@ export interface Bill {
   time: string;
 }
 
+export interface InventoryItem {
+  id: string;
+  name: string;
+  category: "Vegetables" | "Dairy" | "Meat" | "Spices" | "Beverages" | "Grains";
+  currentStock: number;
+  unit: "kg" | "liters" | "units" | "packs" | "grams";
+  minThreshold: number;
+  lastRestocked: string;
+  pricePerUnit: number;
+  status: "In Stock" | "Low Stock" | "Out of Stock";
+}
+
+export interface Customer {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  totalVisits: number;
+  totalSpent: number;
+  loyaltyPoints: number;
+  lastVisit: string;
+  favoriteDishes: string[];
+  tags: string[];
+  status: "Regular" | "VIP" | "New";
+}
+
+export const customers: Customer[] = [
+  {
+    id: "CUST001",
+    name: "Rahul Sharma",
+    email: "rahul.s@example.com",
+    phone: "+91 98765 43210",
+    totalVisits: 12,
+    totalSpent: 15400,
+    loyaltyPoints: 1240,
+    lastVisit: "2024-03-10",
+    favoriteDishes: ["Paneer Butter Masala", "Butter Naan"],
+    tags: ["Vegetarian", "Weekend Regular"],
+    status: "VIP"
+  },
+  {
+    id: "CUST002",
+    name: "Priya Patel",
+    email: "priya.p@example.com",
+    phone: "+91 98222 11100",
+    totalVisits: 5,
+    totalSpent: 6200,
+    loyaltyPoints: 450,
+    lastVisit: "2024-03-08",
+    favoriteDishes: ["Chicken Biryani", "Cold Coffee"],
+    tags: ["Spicy Lover"],
+    status: "Regular"
+  },
+  {
+    id: "CUST003",
+    name: "Ankit Verma",
+    email: "ankit.v@example.com",
+    phone: "+91 99888 77766",
+    totalVisits: 1,
+    totalSpent: 1200,
+    loyaltyPoints: 120,
+    lastVisit: "2024-03-12",
+    favoriteDishes: ["Masala Dosa"],
+    tags: ["First Timer"],
+    status: "New"
+  },
+  {
+    id: "CUST004",
+    name: "Sneha Reddy",
+    email: "sneha.r@example.com",
+    phone: "+91 91234 56789",
+    totalVisits: 25,
+    totalSpent: 42000,
+    loyaltyPoints: 3800,
+    lastVisit: "2024-03-11",
+    favoriteDishes: ["Pasta Alfredo", "Garlic Bread", "Red Wine"],
+    tags: ["VIP", "Wine Enthusiast", "No Onion Garlic"],
+    status: "VIP"
+  }
+];
+
+export const inventoryItems: InventoryItem[] = [
+  {
+    id: "INV001",
+    name: "Paneer (Fresh)",
+    category: "Dairy",
+    currentStock: 15,
+    unit: "kg",
+    minThreshold: 5,
+    lastRestocked: "2024-03-10",
+    pricePerUnit: 450,
+    status: "In Stock"
+  },
+  {
+    id: "INV002",
+    name: "Tomato",
+    category: "Vegetables",
+    currentStock: 8,
+    unit: "kg",
+    minThreshold: 10,
+    lastRestocked: "2024-03-11",
+    pricePerUnit: 40,
+    status: "Low Stock"
+  },
+  {
+    id: "INV003",
+    name: "Chicken Breast",
+    category: "Meat",
+    currentStock: 25,
+    unit: "kg",
+    minThreshold: 8,
+    lastRestocked: "2024-03-12",
+    pricePerUnit: 320,
+    status: "In Stock"
+  },
+  {
+    id: "INV004",
+    name: "Milk",
+    category: "Dairy",
+    currentStock: 50,
+    unit: "liters",
+    minThreshold: 15,
+    lastRestocked: "2024-03-12",
+    pricePerUnit: 66,
+    status: "In Stock"
+  },
+  {
+    id: "INV005",
+    name: "Basmati Rice",
+    category: "Grains",
+    currentStock: 4,
+    unit: "packs",
+    minThreshold: 5,
+    lastRestocked: "2024-03-01",
+    pricePerUnit: 1200,
+    status: "Low Stock"
+  },
+  {
+    id: "INV006",
+    name: "Coca-Cola (500ml)",
+    category: "Beverages",
+    currentStock: 0,
+    unit: "units",
+    minThreshold: 20,
+    lastRestocked: "2024-02-28",
+    pricePerUnit: 35,
+    status: "Out of Stock"
+  },
+  {
+    id: "INV007",
+    name: "Butter",
+    category: "Dairy",
+    currentStock: 12,
+    unit: "kg",
+    minThreshold: 3,
+    lastRestocked: "2024-03-05",
+    pricePerUnit: 580,
+    status: "In Stock"
+  }
+];
+
 export const pastOrders: Bill[] = [
   {
     id: "INV-1001",

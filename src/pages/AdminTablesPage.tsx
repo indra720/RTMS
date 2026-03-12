@@ -21,6 +21,7 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PaymentModal } from "@/components/PaymentModal";
 
 const statusConfig: Record<string, { label: string; color: string; bg: string; border: string }> = {
   available: { label: "Available", color: "text-emerald-500", bg: "bg-emerald-500/10", border: "border-emerald-500/20" },
@@ -74,7 +75,7 @@ export default function AdminTablesPage() {
       shape: newTable.shape,
       section: newTable.section,
       assignedWaiter: newTable.assignedWaiter || undefined,
-      position: { x: 100, y: 100, width: 90, height: 90, rotation: 0 },
+      position:JSON.stringify({ x: 100, y: 100, width: 90, height: 90, rotation: 0 }),
     };
     setTables((prev) => [...prev, newT]);
     setAddOpen(false);
@@ -82,15 +83,13 @@ export default function AdminTablesPage() {
     toast.success(`Table ${newT.number} added`);
   };
 
-  const handleProcessPayment = (method: "cash" | "card" | "upi") => {
-    if (!billingTable || !billingTable.currentOrder) return;
-    setTables(prev => prev.map(t => t.id === billingTable.id ? { ...t, status: "available", currentOrder: undefined } : t));
+  const handlePaymentSuccess = (tableId: number) => {
+    setTables(prev => prev.map(t => t.id === tableId ? { ...t, status: "available", currentOrder: undefined } : t));
     setBillingTable(null);
-    toast.success("Payment Successful");
   };
 
   return (
-    <div className="p-6 space-y-6 max-w-[1400px]">
+    <div className="p-2 space-y-2 max-w-[1400px]">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -146,7 +145,7 @@ export default function AdminTablesPage() {
       </div>
 
       {/* Filter Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-card border border-border/50 p-4 rounded-xl shadow-sm">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-card border border-border/50 p-2 rounded-xl shadow-sm">
         <div className="relative md:col-span-2">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input 
@@ -337,48 +336,11 @@ export default function AdminTablesPage() {
       {/* Settlement Overly */}
       <AnimatePresence>
         {billingTable && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setBillingTable(null)} />
-            <motion.div initial={{ scale: 0.9, opacity: 0, y: 16 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 16 }}
-              className="relative w-full max-w-md bg-card border border-border shadow-elevated rounded-2xl overflow-hidden p-0"
-            >
-              <div className="p-6 border-b border-border/20 bg-muted/20 flex items-center gap-4">
-                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                  <Receipt className="h-6 w-6" />
-                </div>
-                <div>
-                  <h3 className="font-heading font-bold text-xl text-foreground">Settle Bill</h3>
-                  <p className="text-xs text-muted-foreground">Table {billingTable.number} • Payment Sync</p>
-                </div>
-              </div>
-              <div className="p-6 space-y-6">
-                <div className="bg-muted/30 rounded-xl p-5 border border-border/20 space-y-3">
-                  <div className="space-y-2">
-                    {billingTable.currentOrder?.items.map((item, idx) => (
-                      <div key={idx} className="flex justify-between items-center text-sm">
-                        <span className="text-muted-foreground font-medium">{item.name} <span className="text-primary/60 ml-1">x{item.quantity}</span></span>
-                        <span className="text-foreground font-bold">${(item.price * item.quantity).toFixed(2)}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="pt-4 mt-2 border-t border-border/20 flex justify-between items-end">
-                    <div>
-                      <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider block mb-1">Total Due</span>
-                      <span className="text-3xl font-heading font-bold text-primary">${(billingTable.currentOrder?.total || 0).toFixed(2)}</span>
-                    </div>
-                    <Badge variant="outline" className="text-[10px] font-bold uppercase border-primary/20 bg-primary/5 text-primary">INC. TAX</Badge>
-                  </div>
-                </div>
-                <div className="grid grid-cols-3 gap-3">
-                  {['cash', 'card', 'upi'].map((m) => (
-                    <Button key={m} variant="outline" onClick={() => handleProcessPayment(m as any)} className="h-20 flex flex-col gap-2 rounded-xl border-border/50 hover:border-primary/40 hover:bg-primary/5 capitalize">
-                      <span className="text-xs font-bold">{m}</span>
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
+          <PaymentModal 
+            table={billingTable} 
+            onClose={() => setBillingTable(null)} 
+            onPaymentSuccess={handlePaymentSuccess} 
+          />
         )}
       </AnimatePresence>
     </div>

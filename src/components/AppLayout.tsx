@@ -6,6 +6,7 @@ import { Search, Bell, Moon, Sun, User, ChevronDown, LogIn } from "lucide-react"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { NotificationCenter } from "@/components/NotificationCenter";
+import { ConnectivityManager } from "@/components/ConnectivityManager";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +27,7 @@ export function AppLayout() {
 
   return (
     <SidebarProvider>
+      <ConnectivityManager />
       <div className="min-h-screen flex w-full bg-background">
         <AppSidebar />
         <div className="flex-1 flex flex-col min-w-0">

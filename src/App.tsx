@@ -30,6 +30,8 @@ import AdminLoyaltyPage from "./pages/AdminLoyaltyPage";
 import AdminFeedbackPage from "./pages/AdminFeedbackPage";
 import AdminReportsPage from "./pages/AdminReportsPage";
 import AdminShiftsPage from "./pages/AdminShiftPage";
+import AdminInventoryPage from "./pages/AdminInventoryPage";
+import AdminCRMPage from "./pages/AdminCRMPage";
 import ReservationTimelinePage from "./pages/ReservationTimeline";
 import QRCodePage from "./pages/QrCode";
 
@@ -63,6 +65,8 @@ const App = () => (
             <Route path="/admin/reports" element={<AdminReportsPage />} />
             <Route path="/admin/tables" element={<AdminTablesPage />} />
             <Route path="/admin/menu" element={<AdminMenuPage />} />
+            <Route path="/admin/inventory" element={<AdminInventoryPage />} />
+            <Route path="/admin/crm" element={<AdminCRMPage />} />
             <Route path="/admin/reservations" element={<AdminReservationsPage />} />
             <Route path="/admin/orders" element={<AdminOrdersPage />} />
             <Route path="/admin/staff" element={<AdminStaffPage />} />

@@ -22,7 +22,8 @@ import {
   FileBarChart,
   Clock,
   QrCode,
-  Activity
+  Activity,
+  Box
 } from "lucide-react";
 import {
   Sidebar,
@@ -41,6 +42,8 @@ const adminLinks = [
   { title: "Table Management", url: "/admin/tables", icon: Grid3X3 },
   { title: "Floor Designer", url: "/admin/floor-plan", icon: Layout },
   { title: "Menu Management", url: "/admin/menu", icon: Utensils },
+  { title: "Inventory Management", url: "/admin/inventory", icon: Box },
+  { title: "Customer CRM", url: "/admin/crm", icon: Users },
   { title: "Reservations", url: "/admin/reservations", icon: CalendarCheck },
   { title: "Reservation Timeline", url: "/timeline", icon: Activity },
   { title: "Shift Management", url: "/admin/shift", icon: Clock },

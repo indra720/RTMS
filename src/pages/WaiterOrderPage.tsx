@@ -4,7 +4,19 @@ import { menuItems, type MenuItem } from "@/data/mock-data";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Search, Minus, Plus, X, Send, Trash2, ShoppingCart, CheckCircle2 } from "lucide-react";
+import { 
+  Search, 
+  Minus, 
+  Plus, 
+  X, 
+  Send, 
+  Trash2, 
+  ShoppingCart, 
+  CheckCircle2,
+  WifiOff,
+  CloudUpload
+} from "lucide-react";
+import { toast } from "sonner";
 
 interface OrderItem {
   item: MenuItem;
@@ -17,6 +29,7 @@ export default function WaiterOrderPage() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [order, setOrder] = useState<OrderItem[]>([]);
   const [sent, setSent] = useState(false);
+  const [isQueued, setIsQueued] = useState(false);
 
   const categories = useMemo(() => Array.from(new Set(menuItems.map((i) => i.category))), []);
 
@@ -45,21 +58,66 @@ export default function WaiterOrderPage() {
   const tax = subtotal * 0.1;
   const total = subtotal + tax;
 
+  const handleSendOrder = () => {
+    const isOnline = navigator.onLine;
+    
+    if (!isOnline) {
+      // Handle Offline Mode
+      const offlineOrders = JSON.parse(localStorage.getItem("offline_orders") || "[]");
+      const newOfflineOrder = {
+        id: `OFF-${Date.now()}`,
+        items: order.map(o => ({ name: o.item.name, quantity: o.quantity })),
+        total: total,
+        timestamp: new Date().toISOString()
+      };
+      
+      localStorage.setItem("offline_orders", JSON.stringify([...offlineOrders, newOfflineOrder]));
+      setIsQueued(true);
+      toast.warning("Offline Mode", {
+        description: "Internet is unavailable. Order saved to local queue.",
+        icon: <WifiOff className="h-4 w-4" />
+      });
+    } else {
+      setIsQueued(false);
+      toast.success("Order Sent", {
+        description: "Order successfully sent to kitchen."
+      });
+    }
+    
+    setSent(true);
+  };
+
   if (sent) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-3.5rem)] p-6">
         <motion.div 
-          initial={{ opacity: 0, y: 16 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          className="text-center bg-card rounded-xl border border-border/50 shadow-elevated p-10 max-w-sm"
+          initial={{ opacity: 0, scale: 0.9 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          className="text-center bg-card rounded-[2.5rem] border border-border/50 shadow-2xl p-12 max-w-sm relative overflow-hidden"
         >
-          <div className="h-16 w-16 rounded-full bg-status-available/10 flex items-center justify-center mx-auto mb-4">
-            <CheckCircle2 className="h-8 w-8 text-status-available" />
+          {isQueued && (
+            <div className="absolute top-0 left-0 right-0 bg-amber-500 py-1.5 flex items-center justify-center gap-2">
+              <CloudUpload className="h-3 w-3 text-white animate-pulse" />
+              <span className="text-[9px] font-black text-white uppercase tracking-widest">Pending Sync</span>
+            </div>
+          )}
+          
+          <div className={`h-20 w-20 rounded-3xl flex items-center justify-center mx-auto mb-6 ${isQueued ? 'bg-amber-100 text-amber-600' : 'bg-emerald-100 text-emerald-600'}`}>
+            {isQueued ? <CloudUpload className="h-10 w-10" /> : <CheckCircle2 className="h-10 w-10" />}
           </div>
-          <h2 className="font-heading font-bold text-2xl text-foreground mb-2">Order Sent!</h2>
-          <p className="text-sm text-muted-foreground mb-1">Order sent to kitchen</p>
-          <p className="font-heading font-bold text-3xl text-foreground mb-6">₹{total.toFixed(2)}</p>
-          <Button onClick={() => { setOrder([]); setSent(false); }} className="gradient-primary text-primary-foreground border-0 rounded-xl h-11 px-8 font-bold">
+          
+          <h2 className="font-heading font-black text-2xl text-foreground mb-2 uppercase tracking-tight">
+            {isQueued ? "Order Queued!" : "Order Sent!"}
+          </h2>
+          <p className="text-sm text-muted-foreground mb-1 font-medium">
+            {isQueued ? "Waiting for internet connection..." : "Directly sent to the kitchen"}
+          </p>
+          <p className="font-heading font-black text-4xl text-foreground mb-8 mt-4">₹{total.toFixed(2)}</p>
+          
+          <Button 
+            onClick={() => { setOrder([]); setSent(false); }} 
+            className="w-full gradient-primary text-primary-foreground border-0 rounded-2xl h-14 font-black uppercase tracking-widest shadow-xl shadow-primary/20"
+          >
             New Order
           </Button>
         </motion.div>
@@ -210,7 +268,7 @@ export default function WaiterOrderPage() {
               </div>
             </div>
             <div className="flex gap-2 pt-2">
-              <Button onClick={() => setSent(true)} className="flex-1 gap-2 gradient-primary text-primary-foreground border-0 rounded-xl h-12 font-bold shadow-lg shadow-primary/20">
+              <Button onClick={handleSendOrder} className="flex-1 gap-2 gradient-primary text-primary-foreground border-0 rounded-xl h-12 font-bold shadow-lg shadow-primary/20">
                 <Send className="h-4 w-4" /> Process Order
               </Button>
               <Button variant="outline" size="icon" className="rounded-xl h-12 w-12 border-border/50 hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 transition-all" onClick={() => setOrder([])}>
