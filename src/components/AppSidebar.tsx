@@ -113,7 +113,7 @@ export function AppSidebar() {
                 <ChefHat className="h-5 w-5 text-primary-foreground" />
               </div>
               <div className="overflow-hidden">
-                <h1 className="font-bold text-sm tracking-tight text-foreground truncate uppercase">TableFlow</h1>
+                <h1 className="font-bold text-sm tracking-tight text-foreground truncate uppercase">RTMS</h1>
                 <p className="text-[9px] font-black text-primary uppercase leading-none">Enterprise</p>
               </div>
             </div>
