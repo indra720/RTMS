@@ -245,11 +245,11 @@ const AdminMenuPage = () => {
             <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Live Menu Inventory</span>
           </div>
           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="w-40 rounded-xl h-9 bg-card/50 border-border/50 shadow-sm text-[10px] font-bold">
-              <Filter className="h-3 w-3 mr-2" />
+            <SelectTrigger className="w-auto gap-2 rounded-xl h-9 bg-card/50 border-border/50 shadow-sm text-[10px] font-bold">
+              <Filter className="h-3 w-3 " />
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
-            <SelectContent className="rounded-xl border-none shadow-2xl p-2">
+            <SelectContent className="rounded-xl border-none shadow-2xl">
               {categories.map(cat => (
                 <SelectItem key={cat} value={cat} className="capitalize text-[10px] font-semibold rounded-lg">{cat}</SelectItem>
               ))}
@@ -351,7 +351,7 @@ const AdminMenuPage = () => {
       
       {/* Add Dish Modal */}
       <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
-        <DialogContent className="sm:max-w-[550px] rounded-3xl border border-border shadow-2xl bg-card p-8 font-body">
+        <DialogContent className="w-[calc(100vw-1rem)] sm:max-w-4xl h-[90vh] overflow-y-auto lg:overflow-hidden  rounded-3xl border border-border shadow-2xl bg-card p-8 font-body">
           <DialogHeader className="mb-6">
             <DialogTitle className="text-2xl font-bold tracking-tight">Create New Dish</DialogTitle>
             <p className="text-sm text-muted-foreground font-medium">Add a new masterpiece to your restaurant's collection.</p>
@@ -402,7 +402,7 @@ const AdminMenuPage = () => {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="category" className="text-xs font-bold uppercase tracking-widest ml-1">Category</Label>
                 <div className="flex gap-2">
@@ -448,7 +448,7 @@ const AdminMenuPage = () => {
 
       {/* Edit Dish Modal */}
       <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
-        <DialogContent className="sm:max-w-[550px] rounded-3xl border border-border shadow-2xl bg-card p-8 font-body">
+        <DialogContent className="w-[calc(100vw-1rem)] sm:max-w-[550px] h-[90vh] overflow-y-auto rounded-3xl border border-border shadow-2xl bg-card p-8 font-body">
           <DialogHeader className="mb-6">
             <div className="flex items-center gap-3 mb-2">
               <div className="h-10 w-10 rounded-xl overflow-hidden border border-border/30">
@@ -552,7 +552,7 @@ const AdminMenuPage = () => {
 
       {/* Inventory Modal */}
       <Dialog open={isInventoryModalOpen} onOpenChange={setIsInventoryModalOpen}>
-        <DialogContent className="sm:max-w-[450px] rounded-3xl border border-border shadow-2xl bg-card p-8 font-body">
+        <DialogContent className="w-[calc(100vw-1rem)] sm:max-w-[450px] h-[90vh] overflow-y-auto  rounded-3xl border border-border shadow-2xl bg-card p-8 font-body">
           <DialogHeader className="mb-8 text-center">
             <div className="h-16 w-16 rounded-2xl bg-orange-500/10 flex items-center justify-center text-3xl mx-auto mb-4 border border-orange-500/20 shadow-inner">
               <Package className="h-8 w-8 text-orange-500" />
@@ -601,7 +601,7 @@ const AdminMenuPage = () => {
 
       {/* Category Management Modal */}
       <Dialog open={isCategoryModalOpen} onOpenChange={setIsCategoryModalOpen}>
-        <DialogContent className="sm:max-w-[450px] rounded-3xl border border-border shadow-2xl bg-card p-8 font-body">
+        <DialogContent className="w-[calc(100vw-1rem)] h-[90vh] overflow-y-auto lg:overflow-hidden sm:max-w-[450px] rounded-3xl border border-border shadow-2xl bg-card p-8 font-body">
           <DialogHeader className="mb-6">
             <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center text-3xl mx-auto mb-4 border border-primary/20 shadow-inner">
               <Tag className="h-8 w-8 text-primary" />

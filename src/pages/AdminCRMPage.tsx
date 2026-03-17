@@ -66,7 +66,7 @@ const AdminCRMPage = () => {
   };
 
   return (
-    <div className="container w-full p-2 space-y-8 animate-fade-in pb-20">
+    <div className="container w-full p-2 space-y-2 animate-fade-in pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-black font-heading text-foreground tracking-tight uppercase">Customer Relationship</h1>
@@ -178,7 +178,7 @@ const AdminCRMPage = () => {
 
       {/* Customer Detail Dialog */}
       <Dialog open={!!selectedCustomer} onOpenChange={() => setSelectedCustomer(null)}>
-        <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden border-none rounded-[2rem] shadow-2xl">
+        <DialogContent className="w-[calc(100vw-1rem)] h-[90vh] overflow-y-auto dialog-content-custom sm:w-[500px] p-0 border-none rounded-[2rem] shadow-2xl">
           {selectedCustomer && (
             <div className="flex flex-col">
               <div className="gradient-primary p-8 text-white relative overflow-hidden">
@@ -192,7 +192,7 @@ const AdminCRMPage = () => {
                       <h2 className="text-2xl font-heading font-black tracking-tight">{selectedCustomer.name}</h2>
                       <Badge className="bg-white/20 text-white border-none font-black text-[9px] uppercase">{selectedCustomer.status}</Badge>
                     </div>
-                    <div className="flex items-center gap-4 text-white/80 text-sm font-medium">
+                    <div className="flex flex-col sm:flex-row items-center gap-4 text-white/80 text-sm font-medium">
                       <span className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" /> {selectedCustomer.phone}</span>
                       <span className="flex items-center gap-1.5"><Mail className="h-3.5 w-3.5" /> {selectedCustomer.email}</span>
                     </div>
@@ -201,7 +201,7 @@ const AdminCRMPage = () => {
               </div>
 
               <div className="p-8 space-y-8 bg-card max-h-[60vh] overflow-y-auto">
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="bg-muted/30 p-4 rounded-2xl border border-border/50 text-center space-y-1">
                     <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Total Spent</p>
                     <p className="text-lg font-heading font-black text-foreground">₹{selectedCustomer.totalSpent.toLocaleString()}</p>
@@ -263,7 +263,7 @@ const AdminCRMPage = () => {
 
       {/* Add Guest Dialog placeholder */}
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-        <DialogContent className="sm:max-w-[450px] p-0 overflow-hidden border-none rounded-[2rem] shadow-2xl">
+        <DialogContent className="w-[calc(100vw-2rem)] rounded-md sm:max-w-[450px] p-0  border-none  shadow-2xl">
           <div className="gradient-primary p-6 text-white">
             <DialogTitle className="text-xl font-heading font-black uppercase tracking-tight">Add New Guest</DialogTitle>
             <DialogDescription className="text-white/80 mt-1 text-xs">Create a new customer profile for loyalty tracking.</DialogDescription>
@@ -284,7 +284,7 @@ const AdminCRMPage = () => {
               </div>
             </div>
           </div>
-          <DialogFooter className="p-6 bg-muted/20 border-t border-border/50">
+          <DialogFooter className="p-6 bg-muted/20 border-t border-border/50 gap-2">
             <Button variant="outline" onClick={() => setIsAddDialogOpen(false)} className="rounded-xl h-11 font-black uppercase text-[10px] tracking-widest">Cancel</Button>
             <Button className="gradient-primary rounded-xl h-11 px-8 font-black uppercase text-[10px] tracking-widest shadow-lg shadow-primary/20">Save Profile</Button>
           </DialogFooter>

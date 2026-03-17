@@ -96,7 +96,7 @@ export default function AdminReservationsPage() {
                 <Plus className="h-4 w-4" /> New Booking
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-2xl rounded-2xl border border-border shadow-elevated bg-card p-0 overflow-hidden">
+            <DialogContent className="w-[90vw] sm:max-w-2xl h-[90vh] overflow-y-auto dialog-content-custom rounded-2xl border border-border shadow-elevated bg-card p-0 ">
               <div className="p-6 border-b border-border/50 bg-muted/20">
                 <DialogTitle className="font-heading font-bold text-xl uppercase tracking-tight">Advanced Booking Registration</DialogTitle>
                 <p className="text-sm text-muted-foreground mt-1">Register a new guest entity into the floor system.</p>

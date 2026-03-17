@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  AlertTriangle, 
-  ArrowUpDown, 
-  Edit2, 
-  Package, 
+import {
+  Plus,
+  Search,
+  Filter,
+  AlertTriangle,
+  ArrowUpDown,
+  Edit2,
+  Package,
   RefreshCw,
   TrendingDown,
   ChevronRight,
@@ -20,13 +20,13 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from "@/components/ui/table";
 import {
   DropdownMenu,
@@ -58,6 +58,8 @@ const AdminInventoryPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [items, setItems] = useState<InventoryItem[]>(inventoryItems);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<InventoryItem | null>(null);
   const [newItem, setNewItem] = useState({
     name: "",
     category: "Vegetables",
@@ -87,7 +89,7 @@ const AdminInventoryPage = () => {
 
   const handleAddItem = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Create a new item object
     const itemToAdd: InventoryItem = {
       id: `INV${Math.floor(100 + Math.random() * 900)}`,
@@ -98,10 +100,10 @@ const AdminInventoryPage = () => {
       minThreshold: Number(newItem.minThreshold),
       lastRestocked: new Date().toISOString().split('T')[0],
       pricePerUnit: Number(newItem.pricePerUnit),
-      status: Number(newItem.currentStock) === 0 
-        ? "Out of Stock" 
-        : Number(newItem.currentStock) <= Number(newItem.minThreshold) 
-          ? "Low Stock" 
+      status: Number(newItem.currentStock) === 0
+        ? "Out of Stock"
+        : Number(newItem.currentStock) <= Number(newItem.minThreshold)
+          ? "Low Stock"
           : "In Stock"
     };
 
@@ -122,7 +124,7 @@ const AdminInventoryPage = () => {
   };
 
   return (
-    <div className="container w-full p-2 space-y-8 animate-fade-in">
+    <div className="container w-full p-2 space-y-2 animate-fade-in">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-heading font-bold tracking-tight">Inventory Management</h1>
@@ -133,15 +135,15 @@ const AdminInventoryPage = () => {
             <History className="h-4 w-4" />
             <span className="hidden sm:inline">Stock History</span>
           </Button>
-          
+
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
               <Button className="gradient-primary gap-2 h-10 px-3 md:px-4">
                 <Plus className="h-4 w-4" />
-                <span>Add Item</span>
+                <span className="hidden sm:flex">Add Item</span>
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[500px] p-0 overflow-hidden border-none shadow-2xl">
+            <DialogContent className="w-[calc(100vw-1rem)] h-[90vh] overflow-y-auto rounded-md sm:max-w-[500px] p-0  border-none shadow-2xl dialog-content-custom scroll-smooth">
               <form onSubmit={handleAddItem}>
                 <div className="gradient-primary p-6 text-primary-foreground">
                   <DialogTitle className="text-2xl font-heading font-bold">Add New Stock</DialogTitle>
@@ -149,26 +151,26 @@ const AdminInventoryPage = () => {
                     Enter the details of the new item to track in your inventory.
                   </DialogDescription>
                 </div>
-                
+
                 <div className="p-6 space-y-5 bg-card">
                   <div className="space-y-2">
                     <Label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Item Name</Label>
-                    <Input 
-                      id="name" 
-                      placeholder="e.g. Fresh Tomatoes" 
+                    <Input
+                      id="name"
+                      placeholder="e.g. Fresh Tomatoes"
                       className="h-11"
                       value={newItem.name}
-                      onChange={(e) => setNewItem({...newItem, name: e.target.value})}
+                      onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
                       required
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="category" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Category</Label>
-                      <Select 
-                        value={newItem.category} 
-                        onValueChange={(val) => setNewItem({...newItem, category: val})}
+                      <Select
+                        value={newItem.category}
+                        onValueChange={(val) => setNewItem({ ...newItem, category: val })}
                       >
                         <SelectTrigger className="h-11">
                           <SelectValue placeholder="Category" />
@@ -183,12 +185,12 @@ const AdminInventoryPage = () => {
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div className="space-y-2">
                       <Label htmlFor="unit" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Unit Type</Label>
-                      <Select 
-                        value={newItem.unit} 
-                        onValueChange={(val) => setNewItem({...newItem, unit: val})}
+                      <Select
+                        value={newItem.unit}
+                        onValueChange={(val) => setNewItem({ ...newItem, unit: val })}
                       >
                         <SelectTrigger className="h-11">
                           <SelectValue placeholder="Unit" />
@@ -203,30 +205,30 @@ const AdminInventoryPage = () => {
                       </Select>
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="stock" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Initial Stock</Label>
-                      <Input 
-                        id="stock" 
-                        type="number" 
-                        placeholder="0.00" 
+                      <Input
+                        id="stock"
+                        type="number"
+                        placeholder="0.00"
                         className="h-11"
                         value={newItem.currentStock}
-                        onChange={(e) => setNewItem({...newItem, currentStock: e.target.value})}
+                        onChange={(e) => setNewItem({ ...newItem, currentStock: e.target.value })}
                         required
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <Label htmlFor="threshold" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Min Threshold</Label>
-                      <Input 
-                        id="threshold" 
-                        type="number" 
-                        placeholder="Low stock alert at..." 
+                      <Input
+                        id="threshold"
+                        type="number"
+                        placeholder="Low stock alert at..."
                         className="h-11"
                         value={newItem.minThreshold}
-                        onChange={(e) => setNewItem({...newItem, minThreshold: e.target.value})}
+                        onChange={(e) => setNewItem({ ...newItem, minThreshold: e.target.value })}
                         required
                       />
                     </div>
@@ -234,19 +236,137 @@ const AdminInventoryPage = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="price" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Price per Unit (₹)</Label>
-                    <Input 
-                      id="price" 
-                      type="number" 
-                      placeholder="0.00" 
+                    <Input
+                      id="price"
+                      type="number"
+                      placeholder="0.00"
                       className="h-11"
                       value={newItem.pricePerUnit}
-                      onChange={(e) => setNewItem({...newItem, pricePerUnit: e.target.value})}
+                      onChange={(e) => setNewItem({ ...newItem, pricePerUnit: e.target.value })}
                       required
                     />
                   </div>
                 </div>
-                
-                <DialogFooter className="p-6 pt-0 bg-card">
+
+                <DialogFooter className="p-6 pt-0 bg-card gap-2">
+                  <Button type="button" variant="outline" onClick={() => setIsAddDialogOpen(false)} className="h-11 px-6">
+                    Cancel
+                  </Button>
+                  <Button type="submit" className="gradient-primary h-11 px-8">
+                    Save Item
+                  </Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
+          <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+            
+            <DialogContent className="w-[calc(100vw-1rem)] h-[90vh] overflow-y-auto rounded-md sm:max-w-[500px] p-0  border-none shadow-2xl dialog-content-custom scroll-smooth">
+              <form onSubmit={handleAddItem}>
+                <div className="gradient-primary p-6 text-primary-foreground">
+                  <DialogTitle className="text-2xl font-heading font-bold">Edit Stock</DialogTitle>
+                  <DialogDescription className="text-primary-foreground/80 mt-1">
+                    Enter the details of the Edit item to track in your inventory.
+                  </DialogDescription>
+                </div>
+
+                <div className="p-6 space-y-5 bg-card">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Item Name</Label>
+                    <Input
+                      id="name"
+                      placeholder="e.g. Fresh Tomatoes"
+                      className="h-11"
+                      value={newItem.name}
+                      onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="category" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Category</Label>
+                      <Select
+                        value={newItem.category}
+                        onValueChange={(val) => setNewItem({ ...newItem, category: val })}
+                      >
+                        <SelectTrigger className="h-11">
+                          <SelectValue placeholder="Category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Vegetables">Vegetables</SelectItem>
+                          <SelectItem value="Dairy">Dairy</SelectItem>
+                          <SelectItem value="Meat">Meat</SelectItem>
+                          <SelectItem value="Spices">Spices</SelectItem>
+                          <SelectItem value="Beverages">Beverages</SelectItem>
+                          <SelectItem value="Grains">Grains</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="unit" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Unit Type</Label>
+                      <Select
+                        value={newItem.unit}
+                        onValueChange={(val) => setNewItem({ ...newItem, unit: val })}
+                      >
+                        <SelectTrigger className="h-11">
+                          <SelectValue placeholder="Unit" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="kg">Kilograms (kg)</SelectItem>
+                          <SelectItem value="liters">Liters (L)</SelectItem>
+                          <SelectItem value="units">Units (pcs)</SelectItem>
+                          <SelectItem value="packs">Packs</SelectItem>
+                          <SelectItem value="grams">Grams (g)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="stock" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Initial Stock</Label>
+                      <Input
+                        id="stock"
+                        type="number"
+                        placeholder="0.00"
+                        className="h-11"
+                        value={newItem.currentStock}
+                        onChange={(e) => setNewItem({ ...newItem, currentStock: e.target.value })}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="threshold" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Min Threshold</Label>
+                      <Input
+                        id="threshold"
+                        type="number"
+                        placeholder="Low stock alert at..."
+                        className="h-11"
+                        value={newItem.minThreshold}
+                        onChange={(e) => setNewItem({ ...newItem, minThreshold: e.target.value })}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="price" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Price per Unit (₹)</Label>
+                    <Input
+                      id="price"
+                      type="number"
+                      placeholder="0.00"
+                      className="h-11"
+                      value={newItem.pricePerUnit}
+                      onChange={(e) => setNewItem({ ...newItem, pricePerUnit: e.target.value })}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <DialogFooter className="p-6 pt-0 bg-card gap-2">
                   <Button type="button" variant="outline" onClick={() => setIsAddDialogOpen(false)} className="h-11 px-6">
                     Cancel
                   </Button>
@@ -261,7 +381,7 @@ const AdminInventoryPage = () => {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
         <Card className="overflow-hidden border-border/50 shadow-sm group hover:shadow-md transition-all duration-300">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
@@ -352,60 +472,66 @@ const AdminInventoryPage = () => {
               {items
                 .filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
                 .map((item) => (
-                <TableRow key={item.id} className="hover:bg-muted/30 transition-colors">
-                  <TableCell>
-                    <div className="flex flex-col">
-                      <span className="font-semibold text-foreground">{item.name}</span>
-                      <span className="text-xs text-muted-foreground font-mono">{item.id}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline" className="font-medium bg-muted/50 border-border/50">
-                      {item.category}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <span className={`font-bold ${item.currentStock <= item.minThreshold ? 'text-amber-600' : 'text-foreground'}`}>
-                        {item.currentStock}
-                      </span>
-                      <span className="text-xs text-muted-foreground uppercase">{item.unit}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-muted-foreground">{item.minThreshold} {item.unit}</span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-xs font-medium">{item.lastRestocked}</span>
-                  </TableCell>
-                  <TableCell>
-                    <Badge className={`px-2.5 py-0.5 rounded-full border shadow-none ${getStatusColor(item.status)}`}>
-                      {item.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted transition-colors">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48">
-                        <DropdownMenuItem className="gap-2 cursor-pointer">
-                          <Edit2 className="h-3.5 w-3.5" /> Edit Details
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="gap-2 cursor-pointer" onClick={() => handleRestock(item.id)}>
-                          <RefreshCw className="h-3.5 w-3.5" /> Restock Item
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="gap-2 text-destructive focus:text-destructive cursor-pointer">
-                          Archive Item
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
+                  <TableRow key={item.id} className="hover:bg-muted/30 transition-colors">
+                    <TableCell>
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-foreground">{item.name}</span>
+                        <span className="text-xs text-muted-foreground font-mono">{item.id}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="font-medium bg-muted/50 border-border/50">
+                        {item.category}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <span className={`font-bold ${item.currentStock <= item.minThreshold ? 'text-amber-600' : 'text-foreground'}`}>
+                          {item.currentStock}
+                        </span>
+                        <span className="text-xs text-muted-foreground uppercase">{item.unit}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-muted-foreground">{item.minThreshold} {item.unit}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-xs font-medium">{item.lastRestocked}</span>
+                    </TableCell>
+                    <TableCell>
+                      <Badge className={`px-2.5 py-0.5 rounded-full border shadow-none ${getStatusColor(item.status)}`}>
+                        {item.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted transition-colors">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-48">
+                          <DropdownMenuItem
+                            className="gap-2 cursor-pointer"
+                            onClick={() => {
+                              setEditingItem(item);      // set the item to edit
+                              setIsEditDialogOpen(true); // open the dialog
+                            }}
+                          >
+                            <Edit2 className="h-3.5 w-3.5" /> Edit Item
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="gap-2 cursor-pointer" onClick={() => handleRestock(item.id)}>
+                            <RefreshCw className="h-3.5 w-3.5" /> Restock Item
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem className="gap-2 text-destructive focus:text-destructive cursor-pointer">
+                            Archive Item
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </CardContent>

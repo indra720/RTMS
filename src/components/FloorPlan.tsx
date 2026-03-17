@@ -115,7 +115,7 @@ export function FloorPlan() {
         <Dialog open={addOpen} onOpenChange={setAddOpen}>
           <DialogTrigger asChild>
             <Button size="sm" className="h-10 gap-2 rounded-xl gradient-primary text-primary-foreground border-0 shadow-xl shadow-primary/20 hover:scale-105 transition-all active:scale-95 font-black uppercase tracking-tighter text-[10px]">
-              <Plus className="h-4 w-4" /> Add Table
+              <Plus className="h-4 w-4" /> <span className="sm:flex hidden">Add Table</span>
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md rounded-[2.5rem] border-border/40 p-8">
@@ -166,20 +166,20 @@ export function FloorPlan() {
 
         <div className="h-8 w-[1px] bg-border/40 mx-2" />
 
-      <div className="flex flex-col md:flex-row items-center justify-between gap-2">
-         <Button variant="outline" size="sm" className="h-10 gap-2 rounded-xl border-2 font-black uppercase tracking-tighter text-[10px] hover:bg-primary/5 hover:text-primary transition-all">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
+         <Button variant="outline" size="sm" className="h-10 w-full gap-2 rounded-xl border-2 font-black uppercase tracking-tighter text-[10px] hover:bg-primary/5 hover:text-primary transition-all">
           <Layers className="h-4 w-4" /> Section
         </Button>
-        <Button variant="outline" size="sm" className="h-10 gap-2 rounded-xl border-2 font-black uppercase tracking-tighter text-[10px] hover:bg-primary/5 hover:text-primary transition-all">
+        <Button variant="outline" size="sm" className="h-10 w-full gap-2 rounded-xl border-2 font-black uppercase tracking-tighter text-[10px] hover:bg-primary/5 hover:text-primary transition-all">
           <Save className="h-4 w-4" /> Commit
         </Button>
-        <Button variant="ghost" size="sm" className="h-10 gap-2 rounded-xl font-black uppercase tracking-tighter text-[10px] hover:bg-rose-50 hover:text-rose-600 transition-all ml-auto" onClick={resetLayout}>
+        <Button variant="ghost" size="sm" className="h-10  w-fullgap-2 rounded-xl font-black uppercase tracking-tighter text-[10px] hover:bg-rose-50 hover:text-rose-600 transition-all ml-auto" onClick={resetLayout}>
           <RotateCcw className="h-4 w-4" /> Reset Layout
         </Button></div> 
       </div>
 
       {/* Floor Canvas */}
-      <div className="flex-1 rounded-[2.5rem] border-4 border-white bg-slate-100/50 overflow-hidden relative shadow-inner m-6">
+      <div className="flex-1 rounded-[2.5rem] border-4 border-white bg-slate-100/50 overflow-hidden  relative shadow-inner m-6">
         <div className="absolute inset-0 floor-grid opacity-[0.03]" />
         <div ref={containerRef} className="relative w-full h-full min-h-[500px]">
           <TooltipProvider delayDuration={200}>

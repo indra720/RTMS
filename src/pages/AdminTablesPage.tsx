@@ -97,7 +97,7 @@ export default function AdminTablesPage() {
           <p className="text-sm text-muted-foreground mt-0.5">Manage your restaurant floor and table nodes.</p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between gap-3">
           <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as any)} className="bg-muted/50 p-1 rounded-xl">
             <TabsList className="bg-transparent border-0 h-9">
               <TabsTrigger value="grid" className="rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
@@ -112,7 +112,7 @@ export default function AdminTablesPage() {
           <Dialog open={addOpen} onOpenChange={setAddOpen}>
             <DialogTrigger asChild>
               <Button className="gradient-primary text-primary-foreground border-0 gap-2 rounded-xl shadow-elevated h-11 px-5 font-bold">
-                <Plus className="h-4 w-4" /> Add Table
+                <Plus className="h-4 w-4 "  /> <span className="sm:flex hidden">Add Table</span>
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-lg rounded-xl border border-border shadow-elevated bg-card p-0 overflow-hidden">
